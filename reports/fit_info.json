@@ -1,0 +1,17 @@
+{
+  "quick": false,
+  "sampler": {
+    "n_chains": 4,
+    "n_adapt": 1000,
+    "n_burnin": 500,
+    "n_keep": 1000,
+    "seed": 0
+  },
+  "n_prior_draws": 500,
+  "runtime_seconds": 958.7,
+  "meridian": "2.1.0",
+  "jax": "0.10.2",
+  "python": "3.11.18",
+  "machine": "Darwin arm64",
+  "model_file": "model.binpb"
+}

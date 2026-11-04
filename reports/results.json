@@ -1,0 +1,129 @@
+{
+  "diagnostics": {
+    "max_rhat": 1.1684427993954516,
+    "max_rhat_parameter": "mu_t",
+    "n_parameters_rhat_over_threshold": 0,
+    "rhat_threshold": 1.2,
+    "national_fit": {
+      "R_Squared": 0.7710454808139134,
+      "MAPE": 0.026883744176808905,
+      "wMAPE": 0.02689721237709561
+    }
+  },
+  "model_review": {
+    "overall_status": "PASS",
+    "summary_message": "Passed: No major quality issues were identified.",
+    "health_score": 99.80162260980589,
+    "checks": [
+      {
+        "check": "ConvergenceCheck",
+        "status": "Status.PASS",
+        "case": "CONVERGED"
+      },
+      {
+        "check": "BaselineCheck",
+        "status": "Status.PASS",
+        "case": "PASS"
+      },
+      {
+        "check": "BayesianPPPCheck",
+        "status": "Status.PASS",
+        "case": "PASS"
+      },
+      {
+        "check": "GoodnessOfFitCheck",
+        "status": "Status.PASS",
+        "case": "PASS"
+      },
+      {
+        "check": "PriorPosteriorShiftCheck",
+        "status": "Status.PASS",
+        "case": "PASS"
+      },
+      {
+        "check": "ImplausibleROICheck",
+        "status": "Status.PASS",
+        "case": "PASS"
+      },
+      {
+        "check": "HighVarianceCheck",
+        "status": "Status.PASS",
+        "case": "PASS"
+      },
+      {
+        "check": "PotentialBiasCheck",
+        "status": "Status.PASS",
+        "case": "PASS"
+      }
+    ]
+  },
+  "reallocation": {
+    "source": "Channel3",
+    "target": "Channel0",
+    "share": 0.1,
+    "spend_moved": 8786035.8248886,
+    "total_spend": 219492402.35048598,
+    "base_incremental_revenue": {
+      "mean": 263195848.01156262,
+      "ci_low": 174938302.69482455,
+      "ci_high": 367584065.6676045,
+      "prob_positive": 1.0
+    },
+    "change_in_incremental_revenue": {
+      "mean": 3031970.1000993843,
+      "ci_low": -3634476.474740094,
+      "ci_high": 10355042.156617973,
+      "prob_positive": 0.737
+    },
+    "change_per_dollar_moved": 0.3450896582404758,
+    "source_mroi": 0.3909109472375516,
+    "target_mroi": 0.8273549987452163
+  },
+  "optimization": {
+    "total_budget": 219500000.0,
+    "optimizer_reported_lift": 6783570.227122664,
+    "lift_draws": {
+      "mean": 6783216.877922701,
+      "ci_low": -10274425.451115413,
+      "ci_high": 22820747.660038702,
+      "prob_positive": 0.76725
+    },
+    "spend_bounds": "each channel within +/-30% of its current spend (Meridian default)"
+  },
+  "budget_level": {
+    "factor": 0.9,
+    "spend_change": -21949240.235048592,
+    "change_in_incremental_revenue": {
+      "mean": -13404348.554097347,
+      "ci_low": -18308949.83290886,
+      "ci_high": -8962502.680900503,
+      "prob_positive": 0.0
+    },
+    "revenue_per_dollar_of_spend_change": 0.6106976100563725,
+    "prob_revenue_change_smaller_than_spend_change": 0.99675
+  },
+  "total_paid": [
+    {
+      "channel": "All Channels",
+      "spend": 219492402.35048598,
+      "pct_of_spend": 99.99999999999999,
+      "incremental_outcome_mean": 263195848.01156262,
+      "incremental_outcome_ci_low": 174938302.69482455,
+      "incremental_outcome_ci_high": 367584065.6676045,
+      "pct_of_contribution_mean": 19.956925395929627,
+      "pct_of_contribution_ci_low": 13.264763415332418,
+      "pct_of_contribution_ci_high": 27.872201748937172,
+      "roi_mean": 1.1991114279723034,
+      "roi_ci_low": 0.7970130210497338,
+      "roi_ci_high": 1.674700635335183,
+      "mroi_mean": NaN,
+      "mroi_ci_low": NaN,
+      "mroi_ci_high": NaN,
+      "cpik_mean": 0.01757580460115232,
+      "cpik_ci_low": 0.011943138611798186,
+      "cpik_ci_high": 0.02509458269863636
+    }
+  ],
+  "confidence_level": 0.9,
+  "analysis_runtime_seconds": 209.8
+}
