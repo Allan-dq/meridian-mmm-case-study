@@ -1,0 +1,30 @@
+{
+  "quick": false,
+  "sampler": {
+    "chains": 4,
+    "tune": 1500,
+    "draws": 1000,
+    "target_accept": 0.99,
+    "random_seed": 0,
+    "nuts_sampler": "nutpie"
+  },
+  "runtime_seconds": 361.3,
+  "divergences": 7,
+  "max_rhat": 1.0419878644892824,
+  "max_rhat_parameter": "intercept_contribution[Geo26]",
+  "min_ess_bulk": 96.67302693427044,
+  "min_ess_tail": 162.6939668120144,
+  "national_fit": {
+    "R_Squared": 0.7718198595786641,
+    "MAPE": 0.026832916904698603,
+    "wMAPE": 0.026808312879410014
+  },
+  "calibration_draws": 20000,
+  "geo_effects": "non-centred",
+  "pymc_marketing": "1.4.0",
+  "pymc": "6.4.0",
+  "nutpie": "0.16.11",
+  "python": "3.13.10",
+  "machine": "Darwin arm64",
+  "model_file": "pymc_model.nc"
+}

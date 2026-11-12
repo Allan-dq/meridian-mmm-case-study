@@ -7,3 +7,6 @@ __pycache__/
 artifacts/*.binpb
 artifacts/*.log
 smoke/
+.venv-pymc/
+artifacts/*.nc
+artifacts/exp/

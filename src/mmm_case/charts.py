@@ -96,3 +96,28 @@ def budget_shift(table: pd.DataFrame, path) -> None:
     fig.tight_layout()
     fig.savefig(path, dpi=160)
     plt.close(fig)
+
+
+def model_comparison(meridian: pd.DataFrame, pymc: pd.DataFrame, path, confidence: float) -> None:
+    """ROI and mROI by channel, Meridian vs PyMC-Marketing, each with its credible interval."""
+    order = meridian[~meridian["channel"].str.startswith("All")].sort_values("roi_mean")["channel"].tolist()
+    y = np.arange(len(order))
+    fig, axes = plt.subplots(1, 2, figsize=(9.5, 0.6 * len(order) + 1.9), sharey=True)
+    for ax, (col, title) in zip(axes, [("roi", "ROI: average return"), ("mroi", "mROI: next dollar")]):
+        for name, df, off, color in [("Meridian", meridian, 0.14, BLUE), ("PyMC-Marketing", pymc, -0.14, ORANGE)]:
+            d = df.set_index("channel").loc[order]
+            ax.hlines(y + off, d[f"{col}_ci_low"], d[f"{col}_ci_high"], color=color, linewidth=2)
+            ax.plot(d[f"{col}_mean"], y + off, "o", color=color, markersize=7, markeredgecolor=SURFACE,
+                    markeredgewidth=2, label=name)
+        ax.axvline(1.0, color=TEXT_2, linewidth=1, linestyle=(0, (3, 3)))
+        ax.set_title(title, loc="left")
+        ax.set_xlabel("Incremental revenue per $1 of spend")
+        ax.grid(axis="y", visible=False)
+        ax.set_xlim(left=0)
+    axes[0].set_yticks(y, order)
+    axes[0].legend(loc="lower right", fontsize=9)
+    fig.suptitle(f"Same data, two Bayesian MMMs (mean and {int(confidence * 100)}% interval; dashed line = break-even)",
+                 x=0.01, ha="left", fontsize=11, fontweight="semibold")
+    fig.tight_layout()
+    fig.savefig(path, dpi=160)
+    plt.close(fig)

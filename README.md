@@ -4,7 +4,7 @@ A marketing-mix model built with [Google Meridian](https://github.com/google/mer
 
 ```bash
 make install && make all   # full fit ~16 min on an Apple M1 Pro CPU, then ~3.5 min of analysis
-make test                  # 17 tests: scenario mechanics, data checks, consistency of the published numbers
+make test                  # 30 tests: scenario mechanics, data checks, consistency of the published numbers
 ```
 
 > Independent educational project. The data are **simulated** (Meridian's `geo_all_channels.csv`), so no number here describes a real advertiser. Not investment or marketing advice. Not affiliated with Google.
@@ -91,6 +91,38 @@ Bounds: each channel within +/-30% of its current spend (Meridian default). Tota
 
 ![Optimizer reallocation](reports/figures/budget_shift.png)
 
+## Cross-check: the same model in PyMC-Marketing
+
+Does the read-out depend on Meridian's implementation? I refitted the same data with [PyMC-Marketing](https://github.com/pymc-labs/pymc-marketing) 1.4.0, set up to mirror the Meridian model:
+- the same adstock window (lags 0–8) and saturation curve (Hill with slope 1);
+- the same geo pooling of channel effects;
+- the same time effect, using Meridian's own 66 knots as a custom additive effect;
+- an effect prior chosen so that each channel's implied ROI prior has Meridian's median (1.22) and log-scale spread (0.9).
+
+What could not be matched is listed in [`reports/pymc/comparison.md`](reports/pymc/comparison.md).
+
+| | Meridian | PyMC-Marketing |
+|---|---|---|
+| Total paid ROI | 1.20 [0.80, 1.67] | 1.27 [0.83, 1.88] |
+| mROI range across channels | 0.39–0.83 | 0.37–0.77 |
+| Cut every channel 10%: revenue lost (spend saved $21.9M) | $13.4M [$9.0M, $18.3M] | $12.8M [$9.2M, $16.9M] |
+| 10% of Channel3's budget to Channel0 | +$3.0M [−$3.6M, +$10.4M] | +$2.7M [−$2.3M, +$8.3M] |
+| National weekly R² / MAPE | 0.771 / 2.7% | 0.772 / 2.7% |
+| Max R-hat | 1.168 | 1.042 (7 divergent transitions in 4,000 draws) |
+
+![ROI and mROI by channel, Meridian vs PyMC-Marketing](reports/figures/meridian_vs_pymc_roi.png)
+
+**Conclusions that hold in both models:**
+- every channel's mROI is below 1, and the mROI ranking is identical;
+- PyMC-Marketing's mean ROI falls inside Meridian's 90% interval for all five channels;
+- the 10% budget cut and the Channel3 → Channel0 move come out within a few hundred thousand dollars of each other.
+
+**What this does and does not show.** The two models share their structure and their ROI prior on purpose. So the agreement says the read-out does not hinge on one library's code; it does not say the read-out is insensitive to the priors.
+
+**Lessons from the setup:**
+- The national time effect matters. A smooth Gaussian-process trend could not follow this data's week-to-week national swings, and national R² fell to 0.54.
+- For a geo model, PyMC-Marketing by default scales every geo by one national maximum; scaling each geo by its own maximum is the closer match to Meridian's per-capita scaling.
+
 ## Key terms
 
 | Term | Meaning | Where it shows up here |
@@ -121,6 +153,7 @@ Bounds: each channel within +/-30% of its current spend (Meridian default). Tota
 | `make analyze` | Every table, chart and number in `reports/`, plus the results block in this README |
 | `make test` | Unit and consistency tests |
 | `make smoke` | End-to-end run with a few draws (what CI runs; checks the code path, not the numbers) |
+| `make pymc-install pymc-fit pymc-compare` | PyMC-Marketing cross-check in its own environment (`requirements-pymc.txt`, Python 3.12+); fit about 6 min; writes `reports/pymc/` |
 
 ## Limitations
 
